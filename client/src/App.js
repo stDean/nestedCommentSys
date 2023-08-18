@@ -1,13 +1,21 @@
 import { Routes, Route } from "react-router-dom";
 
-import { PostLists } from "./components";
+import { Post, PostLists } from "./components";
+import { PostProvider } from "./context/PostProvider";
 
 function App() {
   return (
     <div className="container">
       <Routes>
         <Route path="/" element={<PostLists />} />
-        <Route path="/post/:id" element={<h1>Single Post</h1>} />
+        <Route
+          path="/post/:id"
+          element={
+            <PostProvider>
+              <Post />
+            </PostProvider>
+          }
+        />
       </Routes>
     </div>
   );

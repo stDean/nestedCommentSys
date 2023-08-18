@@ -17,8 +17,8 @@ export function useAsyncFn(fn, deps = []) {
 
 function useAsyncInternal(fn, deps, initialLoading = false) {
   const [loading, setLoading] = useState(initialLoading);
-  const [error, setError] = useState(initialLoading);
-  const [value, setValue] = useState(initialLoading);
+  const [error, setError] = useState();
+  const [value, setValue] = useState([]);
 
   const execute = useCallback((...params) => {
     setLoading(true);

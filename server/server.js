@@ -27,6 +27,35 @@ app.get("/posts", async (req, res) => {
   );
 });
 
+app.get("/post/:id", async (req, res) => {
+  return await commitToDb(
+    prisma.posts.findUnique({
+      where: { id: req.params.id },
+      select: {
+        body: true,
+        title: true,
+        comments: {
+          orderBy: {
+            createdAt: "desc",
+          },
+          select: {
+            id: true,
+            message: true,
+            parentId: true,
+            createdAt: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    })
+  );
+});
+
 // For error handling
 // app.to gotten from sensible for better error formatting
 async function commitToDb(promise) {
@@ -46,3 +75,25 @@ const start = async () => {
 };
 
 start();
+
+
+// .then(async (post) => {
+//   const likes = await prisma.likes.findMany({
+//     where: {
+//       userId: req.cookies.userId,
+//       commentId: { in: post.comments.map((comment) => comment.is) },
+//     },
+//   });
+
+//   return {
+//     ...post,
+//     comments: post.comments.ma((comment) => {
+//       const { _count, ...commentFields } = comment;
+//       return {
+//         ...commentFields,
+//         likedByMe: likes.find((like) => like.commentId === comment.id),
+//         likeCount: _count.likes,
+//       };
+//     }),
+//   };
+// })
