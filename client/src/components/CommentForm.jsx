@@ -24,7 +24,7 @@ export const CommentForm = ({
           onChange={({ target }) => setMessage(target.value)}
         />
         <button className="btn" disabled={loading} type="submit">
-          {loading ? "loading" : "Post"}
+          {loading ? "Loading" : "Post"}
         </button>
       </div>
       <div className="error-msg">{error}</div>

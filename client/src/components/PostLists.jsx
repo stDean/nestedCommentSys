@@ -4,6 +4,13 @@ import { getPosts } from "../services/posts";
 import { useAsync } from "../hooks/useAsync";
 
 const PostLists = () => {
+  // Instead of this
+  // const [posts, setPosts] = useState([]);
+  // useEffect(() => {
+  //   getPosts.then(setPosts)
+  // }, []);
+
+  // use this
   const { loading, error, value: posts } = useAsync(getPosts);
 
   if (loading) return <h1>loading...</h1>;

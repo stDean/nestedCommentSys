@@ -6,12 +6,15 @@ import { CommentList } from "./CommentList";
 
 const Post = () => {
   const { post, rootComments, createLocalComment } = usePost();
+
+  // using the useAsyncFn because i only want to execute the function when the form is submitted
   const {
     loading,
     error,
     execute: createCommentFn,
   } = useAsyncFn(createComment);
 
+  // return the new comment and all previous comments
   const onCommentCreate = (message) => {
     return createCommentFn({ postId: post.id, message }).then(
       createLocalComment
